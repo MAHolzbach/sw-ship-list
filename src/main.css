@@ -1,3 +1,6 @@
+@import "./components/Ship/ship.scss";
+@import "./components/ProgressBar/progress-bar.scss";
+
 #root {
   max-width: 85%;
   margin: 0 auto;

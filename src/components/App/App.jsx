@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ShipContext from "../../ShipContext";
 import axios from "axios";
+import Ship from "../Ship/Ship";
 
 const App = () => {
   const [shipState, setShipState] = useState({
@@ -19,6 +20,7 @@ const App = () => {
   useEffect(() => {
     const fetchShipData = async () => {
       const res = await axios.get("https://swapi.co/api/starships/");
+      console.log("SHIP DATA:", res.data.results);
       setShipState({
         ships: packageShipData(res.data.results),
         prevPage: res.data.previous,
@@ -26,18 +28,40 @@ const App = () => {
       });
     };
     fetchShipData();
-    console.log(shipState.ships);
   }, []);
 
   const packageShipData = shipData => {
     const shipArray = [];
 
     shipData.forEach(ship => {
+      const formattedNameArray = ship.name.split("");
+      formattedNameArray[0].toUpperCase();
+      const formattedName = formattedNameArray.join("");
+
+      let driveRating;
+      const formattedDriveRating = Math.round(parseFloat(ship.hyperdrive_rating));
+
+      if (formattedDriveRating >= 0 && formattedDriveRating < 1) {
+        driveRating = 6;
+      } else if (formattedDriveRating >= 1 && formattedDriveRating < 2) {
+        driveRating = 5;
+      } else if (formattedDriveRating >= 2 && formattedDriveRating < 3) {
+        driveRating = 4;
+      } else if (formattedDriveRating >= 3 && formattedDriveRating < 4) {
+        driveRating = 3;
+      } else if (formattedDriveRating >= 4 && formattedDriveRating < 5) {
+        driveRating = 2;
+      } else if (formattedDriveRating >= 5) {
+        driveRating = 1;
+      } else {
+        driveRating = "unknown";
+      }
+
       shipArray.push({
-        name: ship.name,
-        crew: ship.crew,
-        passengers: ship.passengers,
-        hyperdrive: ship.hyperdrive_rating
+        name: formattedName,
+        crew: ship.crew === "0" ? "None" : parseInt(ship.crew),
+        passengers: ship.passengers === "0" ? "None" : parseInt(ship.passengers),
+        hyperdrive: driveRating
       });
     });
 
@@ -46,16 +70,11 @@ const App = () => {
 
   return (
     <ShipContext.Provider value={shipState}>
-      <div>
+      <>
         {shipState.ships.map(ship => (
-          <div>
-            <p>{ship.name}</p>
-            <p>{ship.crew}</p>
-            <p>{ship.passengers}</p>
-            <p>{ship.hyperdrive}</p>
-          </div>
+          <Ship key={ship.name} ship={ship} />
         ))}
-      </div>
+      </>
     </ShipContext.Provider>
   );
 };
