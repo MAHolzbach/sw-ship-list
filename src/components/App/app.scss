@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap");
+
+.app-wrapper {
+  height: 100%;
+}
+
+.app-wrapper__title {
+  text-align: center;
+}
+
+.spinner-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90%;
+}
+
+.app-wrapper__ships {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.app-wrapper__navbar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}

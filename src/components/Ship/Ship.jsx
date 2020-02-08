@@ -4,12 +4,18 @@ import ProgressBar from "../ProgressBar/ProgressBar";
 const Ship = ({ ship }) => {
   return (
     <div className="ship-wrapper">
-      <p>Name: {ship.name}</p>
-      <p>Passengers: {ship.passengers}</p>
-      <p>Crew: {ship.crew}</p>
+      <p className="ship-wrapper__name">{ship.name}</p>
+      <div className="ship-wrapper__text-wrapper">
+        <p>Passengers: {ship.passengers}</p>
+        <p>Crew: {`${ship.crew === 0 ? None : ship.crew}`}</p>
+      </div>
       <div className="hyperdrive-wrapper">
         <p className="hyperdrive-wrapper__text">Hyperdrive Class:</p>
-        <div className="hyperdrive-wrapper__rating-wrapper">
+        <div
+          className={`${
+            ship.hyperdrive === "unknown" ? "disabled-wrapper" : ""
+          } hyperdrive-wrapper__rating-wrapper`}
+        >
           <ProgressBar hyperdrive={ship.hyperdrive} />
         </div>
       </div>

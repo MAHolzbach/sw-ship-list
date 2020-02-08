@@ -1,7 +1,12 @@
+@import "./components/App/app.scss";
 @import "./components/Ship/ship.scss";
+@import "./components/Spinner/spinner.scss";
 @import "./components/ProgressBar/progress-bar.scss";
+@import "./components/NavButton/nav-button.scss";
 
 #root {
   max-width: 85%;
+  height: 95vh;
   margin: 0 auto;
+  font-family: "Roboto", sans-serif;
 }
